@@ -90,7 +90,7 @@ describe('Server API Endpoints', () => {
 
   it('returns 404 not_available for missing analysis on /reliability/:kind', async () => {
     const res = await request(app).get(
-      '/reliability/calibration?run=MOCK_CESM2_omip1_temporal_hybrid_base_seed0'
+      '/reliability/calibration?run=MOCK_test_placeholder_run'
     );
     expect(res.status).toBe(404);
     expect(res.body.error.code).toBe('not_available');
