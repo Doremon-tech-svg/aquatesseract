@@ -47,5 +47,8 @@ lint:  ## lint everything
 check:  ## validate every run folder against data contract
 	$(PY) ml/scripts/validate_run.py results/*/
 
+analysis:  ## build analysis artifacts for all runs
+	$(PY) ml/scripts/build_analysis.py results/*/
+
 clean-mock:  ## delete mock runs
 	rm -rf results/MOCK_*
