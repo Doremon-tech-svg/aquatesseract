@@ -1,12 +1,22 @@
 -- idempotent. runs at server boot.
 CREATE TABLE IF NOT EXISTS runs (
-  run_id      TEXT PRIMARY KEY,
-  dataset     TEXT, split TEXT, model TEXT, feature_set TEXT, seed INT,
-  source      TEXT NOT NULL DEFAULT 'hybrid',
-  is_mock     BOOLEAN NOT NULL DEFAULT FALSE,
-  metrics     JSONB,
-  synced_at   TIMESTAMPTZ NOT NULL DEFAULT now()
+  run_id        TEXT PRIMARY KEY,
+  dataset       TEXT,
+  split         TEXT,
+  model         TEXT,
+  feature_set   TEXT,
+  seed          INT,
+  source        TEXT NOT NULL DEFAULT 'hybrid',
+  status        TEXT NOT NULL DEFAULT 'validated',
+  reasons       JSONB DEFAULT '[]'::jsonb,
+  capabilities  JSONB DEFAULT '{}'::jsonb,
+  metrics       JSONB,
+  synced_at     TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+ALTER TABLE runs ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'validated';
+ALTER TABLE runs ADD COLUMN IF NOT EXISTS reasons JSONB DEFAULT '[]'::jsonb;
+ALTER TABLE runs ADD COLUMN IF NOT EXISTS capabilities JSONB DEFAULT '{}'::jsonb;
 
 -- Numbers copied from the OceanVerse paper (Lu et al., KDD'26, Table 2). Label: PUBLISHED. Never mix with ours.
 CREATE TABLE IF NOT EXISTS published_results (
