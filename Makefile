@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 PY := ml/.venv/bin/python
 
-.PHONY: help setup mock up down logs test lint check dev-server dev-client clean-mock
+.PHONY: help setup mock up down logs test lint check dev-server dev-client clean-mock inventory verify analysis
 
 help:  ## list commands
 	@grep -E '^[a-zA-Z_-]+:.*?## ' Makefile | awk 'BEGIN{FS=":.*?## "}{printf "  %-14s %s\n",$$1,$$2}'
@@ -47,8 +47,14 @@ lint:  ## lint everything
 check:  ## validate every run folder against data contract
 	$(PY) ml/scripts/validate_run.py results/*/
 
+inventory:  ## inspect all runs and generate docs/RESULTS_INVENTORY.md
+	$(PY) ml/scripts/inventory.py
+
 analysis:  ## build analysis artifacts for all runs
 	$(PY) ml/scripts/build_analysis.py results/*/
+
+verify:  ## verify checksums of delivered data/runs
+	@if [ -f results/CHECKSUMS.txt ]; then cd results && sha256sum -c CHECKSUMS.txt; elif [ -f data/CHECKSUMS.txt ]; then cd data && sha256sum -c CHECKSUMS.txt; else echo "No CHECKSUMS.txt found in results/ or data/"; fi
 
 clean-mock:  ## delete mock runs
 	rm -rf results/MOCK_*

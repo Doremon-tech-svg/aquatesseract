@@ -4,19 +4,21 @@ Sparse ocean dissolved-oxygen reconstruction on OceanVerse + trust analysis (unc
 
 > Results are evaluated on a **simulated** ocean. Predictions are not new measurements.
 
-## Repo map
+## Repo layout
+
+> **Note:** This repository strictly uses `client/`, `server/`, and `ml/` (NOT `frontend/` or `backend/`).
 
 | Path | Owner | What |
 |---|---|---|
-| `ml/src/aquatesseract/contract.py` | M1+M2+M3 (shared) | data contract constants, `metrics_for()` shared evaluator core, `validate_run()` |
-| `ml/scripts/` | ML team | `make_mock_run.py`, `validate_run.py`; put `train_hybrid.py` etc. here |
-| `server/` | M4 | Express API, Postgres (run registry, published numbers). Reads run folders from `results/` |
-| `client/` | M5 | Vite + React Reconstruction Explorer |
-| `results/` | all | run folders (git-ignored). `{dataset}_{split}_{model}_{feature_set}_seed{n}/` |
-| `data/` | all | raw OceanVerse (git-ignored) + `CHECKSUMS.txt` |
-| `docs/DATA_CONTRACT.md` | all | the frozen contract. Read first |
+| `ml/src/aquatesseract/contract.py` | M1+M2+M3 (shared) | Data contract constants, `metrics_for()`, `metrics_streaming()`, `validate_run()` |
+| `ml/scripts/` | ML team | `make_mock_run.py`, `validate_run.py`, `build_analysis.py`, `inventory.py` |
+| `server/` | M4 | Express API, Postgres (run registry, published numbers). Scans `results/` up to depth 2 |
+| `client/` | M5 | Vite + React Reconstruction Explorer & Landing Page |
+| `results/` | all | Run folders (git-ignored): `{dataset}_{split}_{model}_{feature_set}_seed{n}/` or `hybrid_fixed/<run>` |
+| `data/` | all | Raw OceanVerse data (git-ignored) + `CHECKSUMS.txt` |
+| `docs/` | all | `DATA_CONTRACT.md` (v0.2), `api_reference.md`, `ML_RUNBOOK.md` |
 
-Flow: `ML -> results/<run>/ -> read-only API -> frontend`. No live inference.
+Flow: `ML -> results/<run>/ -> read-only API -> client`. No live inference.
 
 ## Pinned toolchain (same for everyone)
 
@@ -31,46 +33,60 @@ Flow: `ML -> results/<run>/ -> read-only API -> frontend`. No live inference.
 
 ## Quick start
 
-### A. Docker (M4/M5, anyone who only needs the app)
+### A. Docker (Full stack: DB + API + Web)
 ```bash
 cp .env.example .env
-python3 -m venv ml/.venv && ml/.venv/bin/pip install -r ml/requirements.txt && ml/.venv/bin/pip install -e ml
-make mock        # fake run in real format
-make up          # db :5432, api :4000, web :5173
+make setup       # node deps + python venv
+make mock        # builds all 4 small mock variants
+make check       # validates contract on all runs
+make analysis    # builds reliability & density analysis
+make up          # db :5433->5432, api :4000, web :5173
 ```
-Open http://localhost:5173 . API check: http://localhost:4000/health
+Open http://localhost:5173 (landing) or http://localhost:5173/#/explorer.
+API health: http://localhost:4000/health
 
-### B. Local (ML members, or no Docker)
+### B. Using Real Runs from ML Team
+```bash
+# 1. Copy delivered run folders into results/
+cp -r /path/to/runs/* results/
+
+# 2. Verify SHA-256 integrity (if CHECKSUMS.txt exists)
+make verify
+
+# 3. Validate contract compliance
+make check
+
+# 4. Generate derived analysis artifacts (density, calibration, depth profiles)
+make analysis
+
+# 5. Inventory inspection
+make inventory
+```
+
+### C. Local Dev (Without Docker)
 ```bash
 nvm use                 # node 20.15.1
-make setup              # npm ci x2, python venv, deps
-# then install torch for your hardware: ml/requirements-torch.txt
+make setup              # npm ci in client/server, python venv
 make mock
-docker compose up db    # only postgres in docker
-make dev-server         # terminal 1  (works without db too, file-only)
-make dev-client         # terminal 2
+docker compose up db -d # start postgres container (or use local postgres)
+make dev-server         # terminal 1 (starts express on :4000)
+make dev-client         # terminal 2 (starts vite on :5173)
 ```
 
 ## Rules that kill "works on my machine"
 
-1. **Install only from lockfiles.** `npm ci`, `pip install -r ml/requirements.txt`. Need new dep? Add exact version, commit lockfile, say so in chat.
+1. **Install only from lockfiles.** `npm ci`, `pip install -r ml/requirements.txt`. Need new dep? Add exact version, commit lockfile, mention in report.
 2. **No absolute paths.** Use env vars (`RESULTS_DIR`, `DATABASE_URL`) or repo-relative paths. Config from `.env`, never committed.
-3. **No big files in git.** `.npy/.nc/.pt` ignored; pre-commit blocks >2 MB. Share data by checksum (`data/CHECKSUMS.txt`).
+3. **No big files in git.** `.npy/.nc/.pt/.mp4` ignored; pre-commit blocks >2 MB. Share data by checksum (`data/CHECKSUMS.txt`).
 4. **One contract.** Array order `(year, depth, lat, lon)`, NaN on land, `error = prediction - truth`. Change only via PR touching `contract.py` + `docs/DATA_CONTRACT.md` + server together.
 5. **Every run folder must pass `make check`** before M4/M5 touch it.
-6. **One evaluator.** Metrics come from `contract.metrics_for()` only. No number in slides unless M2's evaluator made it.
+6. **One evaluator.** Metrics come from `contract.metrics_for()` / `metrics_streaming()`.
 7. **Label sources.** `published` (paper) vs `reproduced` (ours, baselines) vs `hybrid` (ours). Never mixed.
-8. **Seeds fixed and recorded** in `config.json`. Run naming: `{dataset}_{split}_{model}_{feature_set}_seed{n}`.
-9. **CI must be green** to merge. `pre-commit install` once.
-10. **PRs, small, 1 review.** Branches `m1/...`, `m4/...`. Never push to `main`.
-
-## Daily status post (twice a day)
-```
-Done: / Blocked: / Next: / Files changed: / Result or log location:
-```
+8. **Label observed cells.** Use exact label **"observed cells (contract group)"** in all UI and reports.
+9. **Seeds fixed and recorded** in `config.json`. Run naming: `{dataset}_{split}_{model}_{feature_set}_seed{n}`.
+10. **CI must be green** to merge. `pre-commit install` once.
 
 ## Troubleshooting
-- `/health` says `db:false` -> postgres not up. API still serves files; `/comparison` loses published rows.
+- `/health` says `db:false` -> postgres not up or port 5432 in use. If host has local postgres, set `POSTGRES_PORT=5433` in `.env`. API still serves files.
 - `make check` FAIL "NaN" -> land filled with 0. Must be NaN in `truth`/`pred_*`.
-- Map upside-down / shifted 180° -> lat/lon convention unverified. M3 verifies, fix `metadata.json`, not the client.
-- Port in use -> change `SERVER_PORT` / `CLIENT_PORT` in `.env`.
+- Map upside-down / shifted 180° -> lat/lon convention unverified. Fix `metadata.json`, not the client.
