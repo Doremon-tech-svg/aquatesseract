@@ -16,8 +16,8 @@ setup:  ## one-shot local install (node deps + python venv)
 	$(PY) -m pip install -e ml
 	@echo "ML members: also install torch for YOUR hardware, see ml/requirements-torch.txt"
 
-mock:  ## generate mock run folder (same format as real runs)
-	$(PY) ml/scripts/make_mock_run.py --out results
+mock:  ## generate mock run folders (all 4 variants, small)
+	$(PY) ml/scripts/make_mock_run.py --out results --variant all
 
 up:  ## full stack in docker (db + api + web)
 	@test -f .env || cp .env.example .env
