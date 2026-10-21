@@ -309,12 +309,17 @@ export default function LandingPage({ onEnterExplorer }: Props) {
       </nav>
 
       {/* ════ FIXED OBSERVATION WINDOW (LEFT SIDE) ════ */}
-      <aside className="fixed-obs-window" aria-label="Real-time Ocean Observation HUD">
+      {/* simulation-banner */}
+      <div className="simulation-banner" role="alert" aria-live="polite">
+        ⚠ Evaluated on a simulated ocean (CESM2-OMIP1). Not real-ocean validation, not live inference.
+      </div>
+      <aside className="fixed-obs-window" aria-label="Illustrative Profile HUD">
         <div className="obs-header">
           <div className="obs-live-tag">
             <span className="obs-beacon" />
-            <span className="obs-live-text">TELEMETRY // LIVE HUD</span>
+            <span className="obs-live-text">ILLUSTRATIVE PROFILE</span>
           </div>
+          {/* Illustrative values, not live data. */}
           <span className="obs-zone-badge" style={{ color: telemetry.zoneColor, borderColor: `${telemetry.zoneColor}44` }}>
             {telemetry.zoneName}
           </span>
@@ -478,7 +483,7 @@ export default function LandingPage({ onEnterExplorer }: Props) {
         <div className="depth-section__inner" style={getZoomStyle(2)}>
           <div className="zone-narrative zone-narrative--deep">
             <span className="zone-kicker kicker-blue">2,000 METERS · MESOPELAGIC TWILIGHT</span>
-            <h2 className="zone-title zone-title--blue">
+            <h2 className="zone-title zone-title--deep">
               THE DEEP OCEAN
             </h2>
             <p className="zone-lead">
@@ -487,11 +492,12 @@ export default function LandingPage({ onEnterExplorer }: Props) {
             </p>
             <div className="zone-highlight-card">
               <div className="zone-card-stat">
-                <span className="stat-big stat-blue">±12.8 µmol</span>
-                <span className="stat-label">Model Uncertainty Window</span>
+                <span className="stat-big stat-blue">~3.7%</span>
+                {/* TODO: bind to /metrics */}
+                <span className="stat-label">Ocean oxygen observed (OceanVerse paper)</span>
               </div>
               <p className="stat-note">
-                Only 12% observation density. Sparse matrix completion reconstructs the unseen.
+                ~3.7% of the ocean's dissolved oxygen observed over 100 years (OceanVerse paper). Sparse reconstruction fills the unseen.
               </p>
             </div>
           </div>
@@ -507,7 +513,7 @@ export default function LandingPage({ onEnterExplorer }: Props) {
         <div className="depth-section__inner" style={getZoomStyle(3)}>
           <div className="zone-narrative zone-narrative--abyss">
             <span className="zone-kicker kicker-purple">5,500 METERS · ABYSSOPELAGIC REALM</span>
-            <h2 className="zone-title zone-title--purple">
+            <h2 className="zone-title zone-title--abyss">
               THE ABYSS
             </h2>
             <p className="zone-lead">
@@ -516,11 +522,12 @@ export default function LandingPage({ onEnterExplorer }: Props) {
             </p>
             <div className="zone-highlight-card">
               <div className="zone-card-stat">
-                <span className="stat-big stat-purple">73%</span>
-                <span className="stat-label">Never Directly Sampled</span>
+                <span className="stat-big stat-purple">TO VERIFY</span>
+                {/* TODO: bind to /metrics */}
+                <span className="stat-label">Never-observed fraction (simulation)</span>
               </div>
               <p className="stat-note">
-                Trust matters most where data vanishes. Physics-informed constraints guarantee mass conservation.
+                Trust quantification matters most where data is absent. Uncertainty is estimated, not physics-guaranteed.
               </p>
             </div>
           </div>
@@ -549,16 +556,17 @@ export default function LandingPage({ onEnterExplorer }: Props) {
             </button>
             <div className="cta-specs-row">
               <div className="cta-spec-item">
-                <span className="spec-val">0 – 6,000 m</span>
-                <span className="spec-lbl">Continuous Depth Column</span>
+                <span className="spec-val">0 – 5,500 m (33 model levels)</span>
+                <span className="spec-lbl">Depth Column</span>
               </div>
               <div className="cta-spec-item">
                 <span className="spec-val">OceanVerse</span>
-                <span className="spec-lbl">Validation Benchmark</span>
+                <span className="spec-lbl">Simulation Dataset (CESM2-OMIP1)</span>
               </div>
               <div className="cta-spec-item">
-                <span className="spec-val">100% Physics Checked</span>
-                <span className="spec-lbl">Conserved Oxygen Budget</span>
+                <span className="spec-val">Spatial Split</span>
+                {/* TODO: bind to /metrics */}
+                <span className="spec-lbl">1 seed · 1 simulation</span>
               </div>
             </div>
           </div>

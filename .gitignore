@@ -13,9 +13,17 @@ data/*
 results/*
 !results/.gitkeep
 *.npy
+*.npz
 *.nc
 *.pt
 *.ckpt
+# analysis arrays are derived, never commit
+**/analysis/*.npy
+# media: large video/image files should use Git LFS or external hosting
+# These are currently tracked; see docs/AGENT_REPORT.md for recommendations
+# *.mp4
+# *.mov
+# *.png
 
 # generated Python package metadata
 *.egg-info/
