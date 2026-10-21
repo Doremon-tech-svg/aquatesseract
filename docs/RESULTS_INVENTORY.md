@@ -8,21 +8,21 @@ Path: `/home/divyank-richhariya/INNOTECH/aquatesseract/results/MOCK_CESM2_omip1_
 
 | Array File | Shape | Dtype |
 |---|---|---|
-| `observation_density.npy` | `(5, 33, 36, 72)` | `float32` |
-| `observed_mask.npy` | `(5, 33, 36, 72)` | `uint8` |
+| `observation_density.npy` | `(10, 33, 36, 72)` | `float32` |
+| `observed_mask.npy` | `(10, 33, 36, 72)` | `uint8` |
 | `ocean_mask.npy` | `(33, 36, 72)` | `uint8` |
-| `pred_mean.npy` | `(5, 33, 36, 72)` | `float32` |
-| `pred_std.npy` | `(5, 33, 36, 72)` | `float32` |
-| `truth.npy` | `(5, 33, 36, 72)` | `float32` |
-| `analysis/observation_density.npy` | `(5, 33, 36, 72)` | `float32` |
+| `pred_mean.npy` | `(10, 33, 36, 72)` | `float32` |
+| `pred_std.npy` | `(10, 33, 36, 72)` | `float32` |
+| `truth.npy` | `(10, 33, 36, 72)` | `float32` |
+| `analysis/observation_density.npy` | `(10, 33, 36, 72)` | `float32` |
 
 **Config:** `model=hybrid`, `split=spatial`, `feature_set=full`, `seed=1`, `has_uncertainty=True`, `pred_std_is_placeholder=False`
-**Metadata:** years: 5 years [1948..1952]; depths: 33 levels [0..5500m]; lat: 36 items [-87.5..87.5]; lon: 72 items [2.5..357.5]; lat_conv: `TO_VERIFY (mock: index0 = -87.5, south to north)`; lon_conv: `TO_VERIFY (mock: index0 = 2.5E, 0..360)`; oxygen_units: `TO_VERIFY (mock: normalised 0..1)`
+**Metadata:** years: 10 years [1948..1957]; depths: 33 levels [0..5500m]; lat: 36 items [-87.5..87.5]; lon: 72 items [2.5..357.5]; lat_conv: `TO_VERIFY (mock: index0 = -87.5, south to north)`; lon_conv: `TO_VERIFY (mock: index0 = 2.5E, 0..360)`; oxygen_units: `TO_VERIFY (mock: normalised 0..1)`
 **Metrics:**
-- `all`: rmse=0.05998529044564669, mae=0.04404072747922784, r2=0.9451962450583866, n=300565
-- `observed`: rmse=0.01684841001833239, mae=0.012050239190160074, r2=0.9888139944433556, n=5678
-- `never_observed`: rmse=0.06051489599469727, mae=0.044656698995453804, r2=0.944472578060872, n=294887
-- `uncertainty`: coverage90=0.5328597807462612, mean_width90=0.0800948366522789, cov90_never_obs=0.5328142644470594
+- `all`: rmse=0.059746835899307016, mae=0.04377652976832958, r2=0.945713774570815, n=601130
+- `observed`: rmse=0.01632026083502534, mae=0.011658576979424108, r2=0.9895166228966354, n=12137
+- `never_observed`: rmse=0.06031379667146405, mae=0.04443836376805275, r2=0.9449420156208757, n=588993
+- `uncertainty`: coverage90=0.5324239349225625, mean_width90=0.07966764271259308, cov90_never_obs=0.5324188912262116
 
 ---
 
@@ -31,21 +31,21 @@ Path: `/home/divyank-richhariya/INNOTECH/aquatesseract/results/MOCK_CESM2_omip1_
 
 | Array File | Shape | Dtype |
 |---|---|---|
-| `observation_density.npy` | `(5, 33, 36, 72)` | `float32` |
-| `observed_mask.npy` | `(5, 33, 36, 72)` | `uint8` |
+| `observation_density.npy` | `(10, 33, 36, 72)` | `float32` |
+| `observed_mask.npy` | `(10, 33, 36, 72)` | `uint8` |
 | `ocean_mask.npy` | `(33, 36, 72)` | `uint8` |
-| `pred_mean.npy` | `(5, 33, 36, 72)` | `float32` |
-| `pred_std.npy` | `(5, 33, 36, 72)` | `float32` |
-| `truth.npy` | `(5, 33, 36, 72)` | `float32` |
-| `analysis/observation_density.npy` | `(5, 33, 36, 72)` | `float32` |
+| `pred_mean.npy` | `(10, 33, 36, 72)` | `float32` |
+| `pred_std.npy` | `(10, 33, 36, 72)` | `float32` |
+| `truth.npy` | `(10, 33, 36, 72)` | `float32` |
+| `analysis/observation_density.npy` | `(10, 33, 36, 72)` | `float32` |
 
 **Config:** `model=hybrid`, `split=spatial`, `feature_set=xdrop`, `seed=1`, `has_uncertainty=True`, `pred_std_is_placeholder=False`
-**Metadata:** years: 5 years [1948..1952]; depths: 33 levels [0..5500m]; lat: 36 items [-87.5..87.5]; lon: 72 items [2.5..357.5]; lat_conv: `TO_VERIFY (mock: index0 = -87.5, south to north)`; lon_conv: `TO_VERIFY (mock: index0 = 2.5E, 0..360)`; oxygen_units: `TO_VERIFY (mock: normalised 0..1)`
+**Metadata:** years: 10 years [1948..1957]; depths: 33 levels [0..5500m]; lat: 36 items [-87.5..87.5]; lon: 72 items [2.5..357.5]; lat_conv: `TO_VERIFY (mock: index0 = -87.5, south to north)`; lon_conv: `TO_VERIFY (mock: index0 = 2.5E, 0..360)`; oxygen_units: `TO_VERIFY (mock: normalised 0..1)`
 **Metrics:**
-- `all`: rmse=0.05998529044564669, mae=0.04404072747922784, r2=0.9451962450583866, n=300565
-- `observed`: rmse=0.01684841001833239, mae=0.012050239190160074, r2=0.9888139944433556, n=5678
-- `never_observed`: rmse=0.06051489599469727, mae=0.044656698995453804, r2=0.944472578060872, n=294887
-- `uncertainty`: coverage90=0.9005173589739325, mean_width90=0.1820336878299713, cov90_never_obs=0.9005144343426466
+- `all`: rmse=0.059746835899307016, mae=0.04377652976832958, r2=0.945713774570815, n=601130
+- `observed`: rmse=0.01632026083502534, mae=0.011658576979424108, r2=0.9895166228966354, n=12137
+- `never_observed`: rmse=0.06031379667146405, mae=0.04443836376805275, r2=0.9449420156208757, n=588993
+- `uncertainty`: coverage90=0.9004208740205946, mean_width90=0.18106283247470856, cov90_never_obs=0.9005590898363818
 
 ---
 
@@ -54,20 +54,20 @@ Path: `/home/divyank-richhariya/INNOTECH/aquatesseract/results/MOCK_CESM2_omip1_
 
 | Array File | Shape | Dtype |
 |---|---|---|
-| `observation_density.npy` | `(5, 33, 36, 72)` | `float32` |
-| `observed_mask.npy` | `(5, 33, 36, 72)` | `uint8` |
+| `observation_density.npy` | `(10, 33, 36, 72)` | `float32` |
+| `observed_mask.npy` | `(10, 33, 36, 72)` | `uint8` |
 | `ocean_mask.npy` | `(33, 36, 72)` | `uint8` |
-| `pred_mean.npy` | `(5, 33, 36, 72)` | `float32` |
-| `pred_std.npy` | `(5, 33, 36, 72)` | `float32` |
-| `truth.npy` | `(5, 33, 36, 72)` | `float32` |
-| `analysis/observation_density.npy` | `(5, 33, 36, 72)` | `float32` |
+| `pred_mean.npy` | `(10, 33, 36, 72)` | `float32` |
+| `pred_std.npy` | `(10, 33, 36, 72)` | `float32` |
+| `truth.npy` | `(10, 33, 36, 72)` | `float32` |
+| `analysis/observation_density.npy` | `(10, 33, 36, 72)` | `float32` |
 
 **Config:** `model=lstm`, `split=spatial`, `feature_set=full`, `seed=1`, `has_uncertainty=False`, `pred_std_is_placeholder=True`
-**Metadata:** years: 5 years [1948..1952]; depths: 33 levels [0..5500m]; lat: 36 items [-87.5..87.5]; lon: 72 items [2.5..357.5]; lat_conv: `TO_VERIFY (mock: index0 = -87.5, south to north)`; lon_conv: `TO_VERIFY (mock: index0 = 2.5E, 0..360)`; oxygen_units: `TO_VERIFY (mock: normalised 0..1)`
+**Metadata:** years: 10 years [1948..1957]; depths: 33 levels [0..5500m]; lat: 36 items [-87.5..87.5]; lon: 72 items [2.5..357.5]; lat_conv: `TO_VERIFY (mock: index0 = -87.5, south to north)`; lon_conv: `TO_VERIFY (mock: index0 = 2.5E, 0..360)`; oxygen_units: `TO_VERIFY (mock: normalised 0..1)`
 **Metrics:**
-- `all`: rmse=0.05998529044564669, mae=0.04404072747922784, r2=0.9451962450583866, n=300565
-- `observed`: rmse=0.01684841001833239, mae=0.012050239190160074, r2=0.9888139944433556, n=5678
-- `never_observed`: rmse=0.06051489599469727, mae=0.044656698995453804, r2=0.944472578060872, n=294887
+- `all`: rmse=0.059746835899307016, mae=0.04377652976832958, r2=0.945713774570815, n=601130
+- `observed`: rmse=0.01632026083502534, mae=0.011658576979424108, r2=0.9895166228966354, n=12137
+- `never_observed`: rmse=0.06031379667146405, mae=0.04443836376805275, r2=0.9449420156208757, n=588993
 - `uncertainty`: *none / stripped*
 
 ---
@@ -77,20 +77,20 @@ Path: `/home/divyank-richhariya/INNOTECH/aquatesseract/results/MOCK_CESM2_omip1_
 
 | Array File | Shape | Dtype |
 |---|---|---|
-| `observation_density.npy` | `(5, 33, 36, 72)` | `float32` |
-| `observed_mask.npy` | `(5, 33, 36, 72)` | `uint8` |
+| `observation_density.npy` | `(10, 33, 36, 72)` | `float32` |
+| `observed_mask.npy` | `(10, 33, 36, 72)` | `uint8` |
 | `ocean_mask.npy` | `(33, 36, 72)` | `uint8` |
-| `pred_mean.npy` | `(5, 33, 36, 72)` | `float32` |
-| `pred_std.npy` | `(5, 33, 36, 72)` | `float32` |
-| `truth.npy` | `(5, 33, 36, 72)` | `float32` |
-| `analysis/observation_density.npy` | `(5, 33, 36, 72)` | `float32` |
+| `pred_mean.npy` | `(10, 33, 36, 72)` | `float32` |
+| `pred_std.npy` | `(10, 33, 36, 72)` | `float32` |
+| `truth.npy` | `(10, 33, 36, 72)` | `float32` |
+| `analysis/observation_density.npy` | `(10, 33, 36, 72)` | `float32` |
 
 **Config:** `model=transformer`, `split=spatial`, `feature_set=full`, `seed=1`, `has_uncertainty=False`, `pred_std_is_placeholder=True`
-**Metadata:** years: 5 years [1948..1952]; depths: 33 levels [0..5500m]; lat: 36 items [-87.5..87.5]; lon: 72 items [2.5..357.5]; lat_conv: `TO_VERIFY (mock: index0 = -87.5, south to north)`; lon_conv: `TO_VERIFY (mock: index0 = 2.5E, 0..360)`; oxygen_units: `TO_VERIFY (mock: normalised 0..1)`
+**Metadata:** years: 10 years [1948..1957]; depths: 33 levels [0..5500m]; lat: 36 items [-87.5..87.5]; lon: 72 items [2.5..357.5]; lat_conv: `TO_VERIFY (mock: index0 = -87.5, south to north)`; lon_conv: `TO_VERIFY (mock: index0 = 2.5E, 0..360)`; oxygen_units: `TO_VERIFY (mock: normalised 0..1)`
 **Metrics:**
-- `all`: rmse=0.05998529044564669, mae=0.04404072747922784, r2=0.9451962450583866, n=300565
-- `observed`: rmse=0.01684841001833239, mae=0.012050239190160074, r2=0.9888139944433556, n=5678
-- `never_observed`: rmse=0.06051489599469727, mae=0.044656698995453804, r2=0.944472578060872, n=294887
+- `all`: rmse=0.059746835899307016, mae=0.04377652976832958, r2=0.945713774570815, n=601130
+- `observed`: rmse=0.01632026083502534, mae=0.011658576979424108, r2=0.9895166228966354, n=12137
+- `never_observed`: rmse=0.06031379667146405, mae=0.04443836376805275, r2=0.9449420156208757, n=588993
 - `uncertainty`: *none / stripped*
 
 ---
