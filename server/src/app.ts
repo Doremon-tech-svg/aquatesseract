@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import { config } from './config';
-import { dbReady, pool } from './db';
+import { dbAlive, dbReady, pool } from './db';
 import { HttpError } from './errors';
 import { readAt, readBlock } from './npy';
 import { arr, listRuns, readJson, runDir } from './runs';
@@ -71,7 +71,7 @@ export function createApp() {
   const app = express();
   app.use(cors({ origin: config.corsOrigin }));
 
-  app.get('/health', (_q, res) => res.json({ status: 'ok', db: dbReady, runs: listRuns().length, results_dir: config.resultsDir }));
+  app.get('/health', async (_q, res) => res.json({ status: 'ok', db: await dbAlive(), runs: listRuns().length, results_dir: config.resultsDir }));
 
   app.get('/runs', (_q, res) => res.json({ runs: listRuns() }));
 
